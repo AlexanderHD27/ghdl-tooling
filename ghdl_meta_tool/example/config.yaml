@@ -1,19 +1,19 @@
 std: "08"
-basedir: "./example/src"
+basedir: "./example"
 
 libs:
   sim: [
     test/clock_emulator.vhdl
   ]
   common: [
-    clock_divider.vhdl,
-    top.vhdl,
+    src/clock_divider.vhdl,
+    src/top.vhdl,
   ]
   vga: [
-    vga/vga_timing_gen.vhdl,
-    vga/clock_gen.vhdl,
-    vga/common.vhdl,
-    vga/timing_configuration.vhdl,
+    src/vga/vga_timing_gen.vhdl,
+    src/vga/clock_gen.vhdl,
+    src/vga/common.vhdl,
+    src/vga/timing_configurations.vhdl,
   ]
 
 tasks:

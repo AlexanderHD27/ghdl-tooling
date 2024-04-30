@@ -1,0 +1,33 @@
+{
+    "deno.enable": true,
+    "cSpell.words": [
+        "ghdl",
+        "lsrf",
+        "VHDL",
+        "Wanalyze",
+        "Wattribute",
+        "Wbinding",
+        "Wbody",
+        "Wdefault",
+        "Wdelayed",
+        "Wdelta",
+        "Wdirective",
+        "Whide",
+        "Wlibrary",
+        "Wnested",
+        "Wnowrite",
+        "Wparenthesis",
+        "Wport",
+        "Wpragma",
+        "Wpure",
+        "Wreserved",
+        "Wruntime",
+        "Wshared",
+        "Wspecs",
+        "Wstatic",
+        "Wuniversal",
+        "Wunused",
+        "Wuseless",
+        "Wvital"
+    ]
+}

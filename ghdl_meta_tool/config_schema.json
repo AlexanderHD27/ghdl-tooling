@@ -1,0 +1,25 @@
+{
+    "properties": {
+        "std": { "type": "string" },
+        "basedir": { "type": "string" },
+        
+        "libs": {
+            "values": {
+                "elements": { "type": "string" }
+            }
+        },
+
+        "tasks": {
+            "values": {
+                "properties": {
+                    "arch": { "type": "string" },
+                    "dep": { "elements": { "type": "string" } }
+                },
+                "optionalProperties": {
+                    "stop_time": { "type": "string" },
+                    "top": { "type": "string" }
+                }
+            }
+        }
+    }
+}
