@@ -1,0 +1,37 @@
+std: "08"
+basedir: "./example/src"
+
+libs:
+  sim: [
+    test/clock_emulator.vhdl
+  ]
+  common: [
+    clock_divider.vhdl,
+    top.vhdl,
+  ]
+  vga: [
+    vga/vga_timing_gen.vhdl,
+    vga/clock_gen.vhdl,
+    vga/common.vhdl,
+    vga/timing_configuration.vhdl,
+  ]
+
+tasks:
+  tb_clock_divider:
+    dep: [test/tb_clock_divider.vhdl, common, sim]
+    arch: sim
+    stop_time: 1us
+
+  tb_clock_emulator:
+    dep: [test/tb_clock_emulator.vhdl, common, sim]
+    arch: sim
+    stop_time: 1us
+
+  tb_vga_clock_gen:
+    dep: [test/vga/tb_vga_clock_gen.vhdl, vga, common, sim]
+    arch: sim
+
+  tb_vga_timing_gen:
+    dep: [test/vga/tb_vga_timing_gen.vhdl, vga, common, sim]
+    arch: sim
+
