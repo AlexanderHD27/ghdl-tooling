@@ -1,3 +1,4 @@
+import {red} from "https://deno.land/std@0.123.0/fmt/colors.ts"
 import { join,  } from "https://deno.land/std@0.224.0/path/mod.ts";
 import { existsSync } from "https://deno.land/std/fs/mod.ts";
 import { parse } from "jsr:@std/yaml";
@@ -28,7 +29,7 @@ export async function loadConfig(f: string): Promise<configuration> {
     
     
     if(errors.length > 0) {
-        console.error("Syntax Error in Config");
+        console.error(red("Syntax Error in Config"));
 
         errors.forEach((e) => {
             console.error(`\t- ${e.instancePath} (schema: ${e.schemaPath})`)

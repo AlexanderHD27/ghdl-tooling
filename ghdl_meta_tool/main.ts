@@ -1,7 +1,4 @@
-import * as tty from "https://deno.land/x/tty/mod.ts";
-import { TerminalSpinner } from "https://deno.land/x/spinners/mod.ts";
-
-import {red} from "https://deno.land/std@0.123.0/fmt/colors.ts"
+import { TaskInterface, TaskStatus } from "./src/cli.ts";
 import { configuration, loadConfig, resolveFiles } from "./src/configuration.ts";
 
 let config: configuration;
@@ -9,7 +6,7 @@ let config: configuration;
 const steps = [
     {
         "name": "Load Config",
-        "fn": async () => {
+        "fn": async (task: TaskInterface) => {
             config = await loadConfig("example/config.yaml");
             return true;
         }
@@ -17,11 +14,11 @@ const steps = [
     {
         "name": "Resolve Files",
         // deno-lint-ignore require-await
-        "fn": async () => {
+        "fn": async (task: TaskInterface) => {
             const missingFiles = resolveFiles(config);
             if(missingFiles.size > 0) {
-                console.error(red("Missing files or libs:"));
-                missingFiles.forEach(f => console.error(red(`\t- ${f}`)));
+                console.error("Missing files or libs:");
+                missingFiles.forEach(f => console.error(`\t- ${f}`));
                 return false;
             } else {
                 return true;
@@ -32,20 +29,31 @@ const steps = [
 
 // Loading & Validating Config
 
-let i = 1;
+import { sleep } from "https://deno.land/x/sleep/mod.ts"
+
+let currentTask: TaskInterface | undefined;
+
+Deno.addSignalListener("SIGINT", () => {
+    if(currentTask !== undefined) {
+        currentTask.end(TaskStatus.INTERRUPTION);
+    }
+
+    Deno.exit(-1);
+})
+
+let i = 0;
 for (const s of steps) {
-    const text = `[${i}/${steps.length}] ${s.name}`;
+    const task = new TaskInterface(s.name, i, steps.length);
     i++;
-    console.log(text);
-
-    const res: boolean = await s.fn();
-    if(!res)
+    
+    currentTask = task;
+    const res: boolean = await s.fn(task);
+    currentTask = undefined;
+    
+    if(!res) {
+        task.end(TaskStatus.FAILED);
         Deno.exit(-1);
+    } else {
+        task.end(TaskStatus.SUCCESS);
+    }
 }
-
-// Analysis
-
-await tty.hideCursor();
-
-await tty.clearLine();
-console.log("Waiting...");
